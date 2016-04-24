@@ -10,10 +10,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
+import lombok.*;
 
 @Entity
 @Table(name="Roles", indexes={
@@ -21,6 +18,7 @@ import lombok.ToString;
 })
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 @ToString(exclude={"user"})
 public class Role implements Serializable {
     private static final long serialVersionUID = 1L;
