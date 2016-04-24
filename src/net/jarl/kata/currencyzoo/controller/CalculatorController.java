@@ -47,6 +47,8 @@ public class CalculatorController {
         String from = form.getFrom();
         String to = form.getTo();
         String amountStr = form.getAmount();
+        
+        getCalculator( model );
 
         if( from == null || to == null || amountStr == null ) {
             model.addAttribute( "error", "alert.invalid.input" );
