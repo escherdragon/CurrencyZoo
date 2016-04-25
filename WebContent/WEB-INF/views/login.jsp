@@ -31,7 +31,7 @@
         </c:if>
 
         <div class="w3-container w3-half w3-margin-top">
-            <form action="${loginUrl}" method="post" class="w3-container w3-card-4">
+            <form action="${loginUrl}" method="post" class="w3-container w3-card-4" accept-charset="utf-8">
                 <p>
                     <input type="text" class="w3-input" id="username" name="username" placeholder="<fmt:message key="login.placeholder.username"/>" required>
                     <label class="w3-label w3-validate" for="username"><fmt:message key="login.label.username"/></label>

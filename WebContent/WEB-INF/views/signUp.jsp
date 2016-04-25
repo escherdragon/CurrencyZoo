@@ -23,7 +23,7 @@
         </c:if>
 
         <div class="w3-container w3-half w3-margin-top">
-            <form name="userForm" action="${signUpUrl}" method="post" class="w3-container w3-card-4">
+            <form name="userForm" action="${signUpUrl}" method="post" class="w3-container w3-card-4" accept-charset="utf-8">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <p>
                     <input type="text" class="w3-input" id="username" name="username" value="${form.username}" required/>

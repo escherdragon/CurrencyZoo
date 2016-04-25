@@ -9,7 +9,7 @@ import org.springframework.web.WebApplicationInitializer;
 import org.springframework.web.context.support.AnnotationConfigWebApplicationContext;
 import org.springframework.web.servlet.DispatcherServlet;
 
-@Order(2)
+@Order(3)
 public class WebAppInitializer implements WebApplicationInitializer {
 
     @Override

@@ -25,7 +25,7 @@
         </c:if>
 
         <div class="w3-container w3-half w3-margin-top">
-            <form name="calculationForm" action="${calculatorUrl}" method="post" class="w3-container w3-card-4">
+            <form name="calculationForm" action="${calculatorUrl}" method="post" class="w3-container w3-card-4"accept-charset="utf-8">
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <p>
                     <select class="w3-select" id="from" name="from" required>
