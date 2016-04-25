@@ -11,14 +11,14 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter
 import org.springframework.web.servlet.view.InternalResourceViewResolver;
 
 import net.jarl.kata.currencyzoo.controller.AuthenticationController;
-import net.jarl.kata.currencyzoo.data.CurrencyDataProvider;
+import net.jarl.kata.currencyzoo.data.CurrencyConverter;
 
 @EnableWebMvc
 @Configuration
 @ComponentScan( basePackageClasses= {
     MVCConfig.class,
     AuthenticationController.class,
-    CurrencyDataProvider.class
+    CurrencyConverter.class
 })
 public class MVCConfig extends WebMvcConfigurerAdapter {
 

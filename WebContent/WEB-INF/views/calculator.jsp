@@ -20,7 +20,7 @@
         </c:if>
         <c:if test="${result != null}">
             <div class="w3-container w3-green">
-                <p>${from} ${amount} = ${to} ${result}/></p>
+                <p><b>${from} ${amount} = ${to} ${result}</b></p>
             </div>
         </c:if>
 
@@ -30,7 +30,7 @@
                 <p>
                     <select class="w3-select" id="from" name="from" required>
                         <c:forEach items="${currencies}" var="currency">
-                            <option value="${currency.symbol}">${currency.symbol} - ${currency.description}</option>
+                            <option value="${currency.symbol}"<c:if test="${from == currency.symbol}"> selected</c:if>>${currency.symbol} - ${currency.description}</option>
                         </c:forEach>
                     </select>
                     <label class="w3-label" for="from"><fmt:message key="calculator.convert.from"/></label>
@@ -38,7 +38,7 @@
                 <p>
                     <select class="w3-select" id="to" name="to" required>
                         <c:forEach items="${currencies}" var="currency">
-                            <option value="${currency.symbol}">${currency.symbol} - ${currency.description}</option>
+                            <option value="${currency.symbol}"<c:if test="${to == currency.symbol}"> selected</c:if>>${currency.symbol} - ${currency.description}</option>
                         </c:forEach>
                     </select>
                     <label class="w3-label" for="to"><fmt:message key="calculator.convert.to"/></label>

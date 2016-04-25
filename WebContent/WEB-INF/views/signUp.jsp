@@ -38,7 +38,7 @@
                     </label>
                 </p>
                 <p>
-                    <input type="password" class="w3-input" id="passwordCopy" name="passwordCopy"/>
+                    <input type="password" class="w3-input" id="passwordCopy" name="passwordCopy" required/>
                     <label class="w3-label w3-validate" for="passwordCopy"><fmt:message key="signup.label.password.repeat"/>
                         <c:if test="${errors != null && errors.hasFieldErrors(\"passwordCopy\")}">
                             <span class="w3-tiny w3-text-red"><b>${errors.getFieldErrors("passwordCopy").get(0).getDefaultMessage()}</b></span>

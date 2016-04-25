@@ -1,5 +1,7 @@
 package net.jarl.kata.currencyzoo.data;
 
+import java.math.BigDecimal;
+
 import lombok.AllArgsConstructor;
 import lombok.EqualsAndHashCode;
 import lombok.Getter;
@@ -13,4 +15,7 @@ public class Currency {
 
     @Getter
     private final String description;
+
+    @Getter
+    private final BigDecimal rate;
 }

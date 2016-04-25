@@ -11,9 +11,9 @@ import org.springframework.ui.ModelMap;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import net.jarl.kata.currencyzoo.data.ConversionException;
 import net.jarl.kata.currencyzoo.data.Currency;
-import net.jarl.kata.currencyzoo.data.CurrencyDataProvider;
-import net.jarl.kata.currencyzoo.data.UnavailableProviderException;
+import net.jarl.kata.currencyzoo.data.CurrencyConverter;
 import net.jarl.kata.currencyzoo.form.CalculationForm;
 
 /**
@@ -26,18 +26,13 @@ import net.jarl.kata.currencyzoo.form.CalculationForm;
 public class CalculatorController {
 
     @Autowired
-    private CurrencyDataProvider provider;
+    private CurrencyConverter provider;
 
     @RequestMapping(value={ "/", CALCULATOR }, method=RequestMethod.GET)
     public String getCalculator( ModelMap model ) {
         List<Currency> currencies;
-        try {
-            currencies = provider.availableCurrencies();
-            model.addAttribute( "currencies", currencies );
-        }
-        catch( UnavailableProviderException e ) {
-            model.addAttribute( "error", "alert.provider.unavailable" );
-        }
+        currencies = provider.availableCurrencies();
+        model.addAttribute( "currencies", currencies );
         return CALCULATOR;
     }
 
@@ -47,7 +42,7 @@ public class CalculatorController {
         String from = form.getFrom();
         String to = form.getTo();
         String amountStr = form.getAmount();
-        
+
         getCalculator( model );
 
         if( from == null || to == null || amountStr == null ) {
@@ -69,8 +64,8 @@ public class CalculatorController {
             model.addAttribute( "amount", amountStr );
             model.addAttribute( "result", result );
         }
-        catch( UnavailableProviderException e ) {
-            model.addAttribute( "error", "alert.provider.unavailable" );
+        catch( ConversionException e ) {
+            model.addAttribute( "error", e.getMessage() );
         }
         return CALCULATOR;
     }
