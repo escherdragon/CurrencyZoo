@@ -3,18 +3,11 @@ package net.jarl.kata.currencyzoo.model;
 import static javax.persistence.GenerationType.AUTO;
 
 import java.time.LocalDateTime;
+import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
-import javax.persistence.CascadeType;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.OneToMany;
-import javax.persistence.PrePersist;
-import javax.persistence.Table;
+import javax.persistence.*;
 
 import lombok.Getter;
 import lombok.Setter;
@@ -46,6 +39,10 @@ public class User {
     @JoinColumn(name="user_id")
     @Getter
     private Set<Role> roles;
+
+    @OneToMany(cascade=CascadeType.REMOVE)
+    @JoinColumn(name="user_id")
+    private Collection<Query> queries;
 
     @PrePersist
     private void prePersist() {

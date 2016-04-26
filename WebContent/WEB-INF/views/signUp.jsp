@@ -92,7 +92,7 @@
                     		<option value="${country}"<c:if test="${country == form.country}">selected</c:if>><fmt:message key="country.${country}"/></option>
                     	</c:forEach>
                     </select>
-                    <label class="w3-label w3-validate" for="country"><fmt:message key="signup.label.country"/>
+                    <label class="w3-label<c:if test="${form.country == null}"> w3-text-red</c:if>" for="country"><fmt:message key="signup.label.country"/>
                         <c:if test="${errors != null && errors.hasFieldErrors(\"country\")}">
                             <span class="w3-tiny w3-text-red"><b>${errors.getFieldErrors("country").get(0).getDefaultMessage()}</b></span>
                         </c:if>

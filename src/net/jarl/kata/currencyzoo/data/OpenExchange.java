@@ -59,6 +59,10 @@ public class OpenExchange implements CurrencyConverter {
             divide( fromCurrency.getRate(), SCALE, ROUNDING_MODE );
     }
 
+    public Optional<Currency> getCurrency( String symbol ) {
+        return Optional.ofNullable( currencies.get() ).map( cs -> cs.get( symbol ) );
+    }
+
     @Scheduled(initialDelay=0, fixedDelay=REFRESH_PERIOD)
     public void refreshCurrencies() {
 
@@ -116,7 +120,7 @@ public class OpenExchange implements CurrencyConverter {
         return StreamSupport.stream( fields.spliterator(), false ).
             collect( Collectors.toMap(
                 entry -> entry.getKey().toString(),
-                entry -> entry.getValue().toString() ) );
+                entry -> entry.getValue().toString().replaceAll( "\"", "" ) ) );
     }
 
     private Optional<Currency> makeCurrency(

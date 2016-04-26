@@ -20,7 +20,7 @@ import net.jarl.kata.currencyzoo.model.UserRepository;
  * @author José A. Romero L.
  */
 public class JpaUserDetailsService implements UserDetailsService {
-    
+
     @Autowired
     private UserRepository userRepository;
 
@@ -32,7 +32,7 @@ public class JpaUserDetailsService implements UserDetailsService {
             map( this::toUserDetails ).
             orElseThrow( () -> new UsernameNotFoundException( username ) );
     }
-    
+
     private UserDetails toUserDetails( User user ) {
         Set<GrantedAuthority> authorities = user.getRoles().stream().
             map( Role::getRoleName ).
