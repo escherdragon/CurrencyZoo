@@ -27,7 +27,11 @@
                 <input type="hidden" name="${_csrf.parameterName}" value="${_csrf.token}" />
                 <p>
                     <input type="text" class="w3-input" id="username" name="username" value="${form.username}" required/>
-                    <label class="w3-label w3-validate" for="username"><fmt:message key="signup.label.username"/></label>
+                    <label class="w3-label w3-validate" for="username"><fmt:message key="signup.label.username"/>
+                        <c:if test="${errors != null && errors.hasFieldErrors(\"username\")}">
+                            <span class="w3-tiny w3-text-red"><b>${errors.getFieldErrors("username").get(0).getDefaultMessage()}</b></span>
+                        </c:if>
+                    </label>
                 </p>
                 <p>
                     <input type="password" class="w3-input" id="password" name="password" required/>

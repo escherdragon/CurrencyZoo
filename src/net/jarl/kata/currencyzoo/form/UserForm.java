@@ -55,8 +55,8 @@ public class UserForm {
         return user;
     }
     
-    public void validate( Errors errors ) {
-        Validator validator = new UserFormValidator();
+    public void validate( Errors errors, boolean loginUsed ) {
+        Validator validator = new UserFormValidator( loginUsed );
         validator.validate( this, errors );
     }
 }

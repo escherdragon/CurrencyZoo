@@ -6,6 +6,7 @@ import static net.jarl.kata.currencyzoo.view.Views.SIGNUP;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.Optional;
 
 import javax.validation.Valid;
 
@@ -42,7 +43,8 @@ public class RegistrationController {
     @RequestMapping(value=SIGNUP, method=RequestMethod.POST)
     public String signUp( @Valid UserForm form, BindingResult result, ModelMap model )
     {
-        form.validate( result );
+        Optional<User> u = userRepo.findByLogin( form.getUsername() );
+        form.validate( result, u.isPresent() );
 
         if( result.hasErrors() ) {
             model.addAttribute( "form", form );

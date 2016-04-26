@@ -18,6 +18,12 @@ import org.springframework.validation.Validator;
  */
 public class UserFormValidator implements Validator {
 
+    private boolean isLoginUsed = true;
+
+    public UserFormValidator( boolean isLoginUsed ) {
+        this.isLoginUsed = isLoginUsed;
+    }
+
     @Override
     public boolean supports( Class<?> clazz ) {
         return UserForm.class.equals( clazz );
@@ -26,21 +32,28 @@ public class UserFormValidator implements Validator {
     @Override
     public void validate( Object target, Errors errors ) {
         UserForm form = (UserForm) target;
+        validateLogin( errors );
         validateEmail( form.getEmail(), errors );
         validateDateOfBirth( form.getDateOfBirth(), errors );
         validatePasswordCopy( form.getPassword(), form.getPasswordCopy(), errors );
     }
 
+    private void validateLogin( Errors errors ) {
+        if( isLoginUsed ) {
+            errors.rejectValue( "username", "error", "username already in use" );
+        }
+    }
+
     private void validateEmail( String email, Errors errors ) {
         EmailValidator validator = EmailValidator.getInstance();
         if( !validator.isValid( email ) ) {
-            errors.rejectValue( "email", "error", "Invalid e-mail address" );
+            errors.rejectValue( "email", "error", "invalid e-mail address" );
         }
     }
 
     private void validateDateOfBirth( Date dateOfBirth, Errors errors ) {
         if( dateOfBirth == null ) {
-            errors.rejectValue( "dateOfBirth", "error", "Malformed date" );
+            errors.rejectValue( "dateOfBirth", "error", "malformed date" );
             return;
         }
         LocalDate local = dateOfBirth.
@@ -49,13 +62,13 @@ public class UserFormValidator implements Validator {
             toLocalDate();
         int age = Period.between( local, LocalDate.now() ).getYears();
         if( age <= 5 || age >= 120 ) {
-            errors.rejectValue( "dateOfBirth", "error", "Unreasonable date of birth" );
+            errors.rejectValue( "dateOfBirth", "error", "unreasonable date of birth" );
         }
     }
 
     private void validatePasswordCopy( String password, String passwordCopy, Errors errors ) {
         if( passwordCopy == null || !passwordCopy.equals( password ) ) {
-            errors.rejectValue( "passwordCopy", "error", "Passwords don't match" );
+            errors.rejectValue( "passwordCopy", "error", "passwords don't match" );
         }
     }
 }
