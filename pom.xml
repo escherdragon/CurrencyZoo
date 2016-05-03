@@ -73,11 +73,16 @@
             <version>2.4.5</version>
         </dependency>
 
-        <!-- Database (H2) -->
+        <!-- Databases -->
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
             <version>1.4.191</version>
+        </dependency>
+        <dependency>
+            <groupId>org.postgresql</groupId>
+            <artifactId>postgresql</artifactId>
+            <version>9.4.1208</version>
         </dependency>
 
         <!-- Data validation -->
