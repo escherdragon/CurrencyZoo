@@ -29,7 +29,7 @@ public class PersistenceContext {
     private static final String MODEL_PKG = "net.jarl.kata.currencyzoo.model";
 
     @Configuration
-    @PropertySource("classpath:application.properties")
+    @PropertySource("classpath:${runtime.environment:default}.properties")
     public static class ApplicationProperties {}
 
     @Bean(destroyMethod="close")
