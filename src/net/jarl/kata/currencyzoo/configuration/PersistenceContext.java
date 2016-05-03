@@ -58,7 +58,8 @@ public class PersistenceContext {
         jpaProperties.put( "hibernate.enable_lazy_load_no_trans", "true" );
         Stream.of(
             "hibernate.hbm2ddl.auto",
-            "hibernate.ejb.naming_strategy",
+            "hibernate.implicit_naming_strategy",
+            "hibernate.physical_naming_strategy",
             "hibernate.show_sql",
             "hibernate.format_sql"
         ).forEach( p -> jpaProperties.put( p, env.getRequiredProperty( p ) ) );
