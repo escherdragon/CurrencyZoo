@@ -9,6 +9,12 @@ import org.springframework.security.core.userdetails.UserDetails;
 import mockit.Mocked;
 import mockit.NonStrictExpectations;
 
+/**
+ * Base class for all test classes that assume some user has been successfully
+ * authenticated.
+ *
+ * @author José A. Romero L.
+ */
 public abstract class AuthenticatedTestContext {
 
     @Mocked
