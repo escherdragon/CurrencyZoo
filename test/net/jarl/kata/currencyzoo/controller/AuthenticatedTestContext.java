@@ -1,6 +1,5 @@
 package net.jarl.kata.currencyzoo.controller;
 
-import org.junit.Before;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -26,8 +25,7 @@ public abstract class AuthenticatedTestContext {
     @Mocked
     protected UserDetails userDetails;
 
-    @Before
-    public void setUp() {
+    protected void assumeAuthenticatedUser() {
         new NonStrictExpectations( SecurityContextHolder.class ) {{
             SecurityContextHolder.getContext(); result = securityCtx;
         }};

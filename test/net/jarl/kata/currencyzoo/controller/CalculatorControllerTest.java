@@ -61,6 +61,10 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
 
     @Test
     public void defaultPageIsCalculator() throws Exception {
+        // given:
+        assumeAuthenticatedUser();
+ 
+        // when: then:
         MVC.mock( controller ).
             perform( get( "/" ) ).
             andExpect( status().isOk() ).
@@ -69,6 +73,10 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
 
     @Test
     public void calculatorPageIsDisplayedOnRequest() throws Exception {
+        // given:
+        assumeAuthenticatedUser();
+ 
+        // when: then:
         MVC.mock( controller ).
             perform( get( CALCULATOR ) ).
             andExpect( status().isOk() ).
@@ -82,6 +90,7 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
         new NonStrictExpectations() {{
             provider.availableCurrencies(); result = currencies;
         }};
+        assumeAuthenticatedUser();
 
         // when: then:
         MVC.mock( controller ).
@@ -102,7 +111,8 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
 
         final BigDecimal total = new BigDecimal( "88.44" );
 
-        prepareCalculationExpectations(from, to, amount, total);
+        assumeAuthenticatedUser();
+        prepareCalculationExpectations( from, to, amount, total );
 
         // when: then:
         MVC.mock( controller ).
@@ -121,6 +131,7 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
 
         final BigDecimal total = new BigDecimal( "88.44" );
 
+        assumeAuthenticatedUser();
         prepareCalculationExpectations( from, null, amount, total );
 
         // when: then:
@@ -138,6 +149,7 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
 
         final BigDecimal total = new BigDecimal( "88.44" );
 
+        assumeAuthenticatedUser();
         prepareCalculationExpectations( from, to, amount, total );
 
         // when: then:
@@ -155,6 +167,7 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
 
         final BigDecimal total = new BigDecimal( "88.44" );
 
+        assumeAuthenticatedUser();
         prepareCalculationExpectations( from, to, amount, total );
         
         final String username = "username";

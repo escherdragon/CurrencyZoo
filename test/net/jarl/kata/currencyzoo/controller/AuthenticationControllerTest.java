@@ -42,6 +42,9 @@ public class AuthenticationControllerTest extends AuthenticatedTestContext {
     public void loginViewIsDisplayedOnRequest()
         throws Exception
     {
+        // given:
+        assumeAuthenticatedUser();
+
         // when, then:
         MVC.mock( controller ).
             perform( get( LOGIN ) ).
@@ -58,6 +61,7 @@ public class AuthenticationControllerTest extends AuthenticatedTestContext {
         new NonStrictExpectations() {{
             userDetails.getUsername(); result = username;
         }};
+        assumeAuthenticatedUser();
 
         // when, then:
         MVC.mock( controller ).
@@ -74,6 +78,7 @@ public class AuthenticationControllerTest extends AuthenticatedTestContext {
     {
         // given:
         String redirectionUrl = LOGGED_OUT.replaceFirst( "redirect:", "" );
+        assumeAuthenticatedUser();
 
         // when, then:
         MVC.mock( controller ).
