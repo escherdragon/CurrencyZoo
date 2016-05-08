@@ -1,6 +1,7 @@
 package net.jarl.kata.currencyzoo.controller;
 
 import static net.jarl.kata.currencyzoo.view.Views.CALCULATOR;
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.equalTo;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.hamcrest.Matchers.sameInstance;
@@ -17,6 +18,7 @@ import java.util.Optional;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
+import org.springframework.data.domain.Pageable;
 import org.springframework.test.context.ContextConfiguration;
 
 import mockit.Injectable;
@@ -63,7 +65,7 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
     public void defaultPageIsCalculator() throws Exception {
         // given:
         assumeAuthenticatedUser();
- 
+
         // when: then:
         MVC.mock( controller ).
             perform( get( "/" ) ).
@@ -75,7 +77,7 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
     public void calculatorPageIsDisplayedOnRequest() throws Exception {
         // given:
         assumeAuthenticatedUser();
- 
+
         // when: then:
         MVC.mock( controller ).
             perform( get( CALCULATOR ) ).
@@ -169,7 +171,7 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
 
         assumeAuthenticatedUser();
         prepareCalculationExpectations( from, to, amount, total );
-        
+
         final String username = "username";
         new NonStrictExpectations() {{
             userDetails.getUsername(); result = username;
@@ -178,11 +180,39 @@ public class CalculatorControllerTest extends AuthenticatedTestContext {
 
         // when:
         MVC.mock( controller ).perform( post( CALCULATOR ) );
- 
+
         // then:
         new Verifications() {{
-            queryRepo.save( (Query) any ); times = 1;
-            // TODO capture query and verify all values are passed correctly.
+            Query q;
+            queryRepo.save( q = withCapture() ); times = 1;
+
+            assertThat( q.getFrom(),   equalTo( from ) );
+            assertThat( q.getTo(),     equalTo( to ) );
+            assertThat( q.getAmount(), equalTo( new BigDecimal( amount ) ) );
+            assertThat( q.getResult(), equalTo( total ) );
+        }};
+    }
+
+    @Test
+    public void previousResultsAreFetchedAndDisplayed() throws Exception {
+        // given:
+        assumeAuthenticatedUser();
+        final String login = "someuser";
+        final List<Query> previousResults = new ArrayList<>();
+        new NonStrictExpectations() {{
+            userDetails.getUsername(); result = login;
+            queryRepo.findAllByUserLoginOrderByTimestampDesc( anyString, (Pageable) any );
+                result = previousResults;
+        }};
+
+        // when: then:
+        MVC.mock( controller ).
+            perform( post( CALCULATOR ) ).
+            andExpect( model().attribute( "queries", sameInstance( previousResults ) ) );
+
+        new Verifications() {{
+            queryRepo.findAllByUserLoginOrderByTimestampDesc( login, (Pageable) any );
+                times = 1;
         }};
     }
 
